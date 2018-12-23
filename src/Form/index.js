@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SocialList from '../SocialList';
 import * as Css from './styles';
 import Checkbox from './Checkbox';
+import FormSubmitted from '../FormSubmitted/index';
 
 class Form extends Component {
   state = {
@@ -67,6 +68,10 @@ class Form extends Component {
   render() {
     const { shared, sended } = this.state;
     // console.log(this.state.valid);
+
+    if (!shared && !sended) {
+      return <FormSubmitted />;
+    }
     return (
       <Css.FormWrapper onSubmit={this.handleSubmit}>
         <Css.Title>Чтобы выиграть путешествие</Css.Title>
