@@ -13,12 +13,18 @@ const socials = [
   { key: 'tw', brandColor: '#00ACED', img: twLogo }
 ];
 
-const SocialList = ({ tiker, handleStopAnimation, handleRunTiker }) => {
+const SocialList = ({
+  tiker,
+  handleStopAnimation,
+  handleClickSocial,
+  handleRunTiker
+}) => {
   return (
     <Css.SocialListWrapper>
       {socials.map((social, index) => (
         <Css.SocialButton
           key={social.key}
+          onClick={handleClickSocial}
           onMouseLeave={handleRunTiker}
           onMouseEnter={handleStopAnimation}
           bg={social.brandColor}

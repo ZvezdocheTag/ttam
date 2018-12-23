@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import SocialList from '../SocialList';
 import * as Css from './styles';
+import Checkbox from './Checkbox';
 
 class Form extends Component {
   state = {
     tiker: 0,
     email: '',
-    valid: false
+    valid: false,
+    shared: false,
+    sended: false
   };
 
+  handleClickSocial = e => {
+    e.preventDefault();
+    this.setState({
+      shared: true
+    });
+  };
   componentDidMount() {
     this.runTiker();
   }
@@ -48,24 +57,42 @@ class Form extends Component {
       });
     }
   };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    this.setState({
+      sended: true
+    });
+  };
   render() {
-    console.log(this.state.valid);
+    const { shared, sended } = this.state;
+    // console.log(this.state.valid);
     return (
-      <Css.FormWrapper>
+      <Css.FormWrapper onSubmit={this.handleSubmit}>
         <Css.Title>Чтобы выиграть путешествие</Css.Title>
-        <Css.Fieldset>
+        <Css.Fieldset disable={shared}>
+          <Css.CheckboxWrapper active={shared}>
+            <Checkbox />
+          </Css.CheckboxWrapper>
           <Css.Label>Поделись с друзьями:</Css.Label>
           <SocialList
             handleStopAnimation={this.stopAnimation}
             handleRunTiker={this.runTiker}
+            handleClickSocial={this.handleClickSocial}
             tiker={this.state.tiker}
           />
         </Css.Fieldset>
-        <Css.Fieldset>
+        <Css.Fieldset disable={sended}>
+          <Css.CheckboxWrapper active={sended}>
+            <Checkbox />
+          </Css.CheckboxWrapper>
           <Css.Label>Оставь почту:</Css.Label>
-          <Css.Input onChange={this.handleChangeEmail} />
+          <Css.Input onChange={this.handleChangeEmail} disabled={sended} />
         </Css.Fieldset>
-        <Css.SendButton disabled={!this.state.valid}> Отправить</Css.SendButton>
+        <Css.SendButton type="submit" disabled={!this.state.valid}>
+          {' '}
+          Отправить
+        </Css.SendButton>
       </Css.FormWrapper>
     );
   }
