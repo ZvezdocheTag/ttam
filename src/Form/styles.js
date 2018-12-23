@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
-import './App.css';
-import styled, { css } from 'styled-components';
-import SocialList from './SocialList';
+import styled from 'styled-components';
 
-const FormWrapper = styled.form`
+export const FormWrapper = styled.form`
   width: 516px;
   padding: 40px 60px;
   text-align: left;
@@ -23,14 +20,14 @@ const FormWrapper = styled.form`
   counter-reset: fieldset;
 `;
 
-const Title = styled.h3`
+export const Title = styled.h3`
   text-align: center;
   font-family: Shnobel, Helvetica Neue, Arial, sans-serif;
   font-size: 50px;
   margin: 0;
 `;
 
-const Fieldset = styled.fieldset`
+export const Fieldset = styled.fieldset`
   border: none;
   outline: none;
   position: relative;
@@ -51,13 +48,13 @@ const Fieldset = styled.fieldset`
   }
 `;
 
-const Label = styled.label`
+export const Label = styled.label`
   font-size: 1.32vw;
   margin-bottom: 10px;
   display: block;
 `;
 
-const SendButton = styled.button`
+export const SendButton = styled.button`
   border: none;
   outline: none;
   margin: 0 auto;
@@ -101,7 +98,7 @@ const SendButton = styled.button`
   }
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
   min-height: 4.04vw;
   padding: 0.88vw 1.47vw;
   margin-bottom: 1.47vw;
@@ -109,58 +106,5 @@ const Input = styled.input`
   border-radius: 3.68vw;
   font-size: 1.32vw;
   text-align: left;
+  width: 100%;
 `;
-
-class Form extends Component {
-  state = {
-    tiker: 0
-  };
-
-  componentDidMount() {
-    this.runTiker();
-  }
-
-  stopAnimation = () => {
-    clearInterval(this.timer);
-  };
-
-  runTiker = () => {
-    this.timer = setInterval(() => {
-      this.setState(prev => ({
-        tiker: prev.tiker + 1
-      }));
-    }, 2000);
-  };
-
-  componentDidUpdate() {
-    if (this.state.tiker === 3) {
-      setTimeout(() => {
-        this.setState({
-          tiker: 0
-        });
-      }, 2000);
-    }
-  }
-  render() {
-    return (
-      <FormWrapper>
-        <Title>Чтобы выиграть путешествие</Title>
-        <Fieldset>
-          <Label>Поделись с друзьями:</Label>
-          <SocialList
-            handleStopAnimation={this.stopAnimation}
-            handleRunTiker={this.runTiker}
-            tiker={this.state.tiker}
-          />
-        </Fieldset>
-        <Fieldset>
-          <Label>Оставь почту:</Label>
-          <Input />
-        </Fieldset>
-        <SendButton disabled={false}> Отправить</SendButton>
-      </FormWrapper>
-    );
-  }
-}
-
-export default Form;

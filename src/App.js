@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import styled from 'styled-components';
 import pinkBackground from './back.png';
-import Form from './Form';
+import Form from './Form/index';
 import 'sanitize.css';
 
 const PageWrapper = styled.div`
