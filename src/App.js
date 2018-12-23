@@ -4,6 +4,13 @@ import styled from 'styled-components';
 import pinkBackground from './back.png';
 import Form from './Form/index';
 import 'sanitize.css';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import reducer from './modules/reducer';
+
+const middleware = [thunk];
+const store = createStore(reducer, applyMiddleware(...middleware));
 
 const PageWrapper = styled.div`
   background: #cd718e url(${pinkBackground}) no-repeat;
@@ -31,14 +38,16 @@ class App extends Component {
   };
   render() {
     return (
-      <div className="App">
-        <PageWrapper>
-          <LogoWrapper>
-            <img src={logo} className="App-logo" alt="logo" />
-          </LogoWrapper>
-          <Form />
-        </PageWrapper>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <PageWrapper>
+            <LogoWrapper>
+              <img src={logo} className="App-logo" alt="logo" />
+            </LogoWrapper>
+            <Form />
+          </PageWrapper>
+        </div>
+      </Provider>
     );
   }
 }

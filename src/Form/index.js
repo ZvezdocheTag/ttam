@@ -1,100 +1,58 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SocialList from '../SocialList';
 import * as Css from './styles';
 import Checkbox from './Checkbox';
 import FormSubmitted from '../FormSubmitted/index';
+import { connect } from 'react-redux';
+import {
+  changeEmailAction,
+  initSocialSharing,
+  submitForm
+} from '../modules/form';
 
-class Form extends Component {
-  state = {
-    tiker: 0,
-    email: '',
-    valid: false,
-    shared: false,
-    sended: false
-  };
-
-  handleClickSocial = e => {
-    e.preventDefault();
-    this.setState({
-      shared: true
-    });
-  };
-  componentDidMount() {
-    this.runTiker();
-  }
-
-  stopAnimation = () => {
-    clearInterval(this.timer);
-  };
-
-  runTiker = () => {
-    this.timer = setInterval(() => {
-      this.setState(prev => ({
-        tiker: prev.tiker + 1
-      }));
-    }, 2000);
-  };
-
-  componentDidUpdate() {
-    if (this.state.tiker === 3) {
-      setTimeout(() => {
-        this.setState({
-          tiker: 0
-        });
-      }, 2000);
-    }
-  }
-
+class Form extends React.PureComponent {
   handleChangeEmail = e => {
-    var pattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
-    if (e.target.value.match(pattern) !== null) {
-      this.setState({
-        email: e.target.value,
-        valid: true
-      });
-    } else {
-      this.setState({
-        valid: false
-      });
-    }
+    this.props.changeEmailAction(e.target.value);
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    this.setState({
-      sended: true
-    });
+    this.props.submitForm();
   };
-  render() {
-    const { shared, sended } = this.state;
-    // console.log(this.state.valid);
 
-    if (!shared && !sended) {
+  handleClickSocial = e => {
+    e.preventDefault();
+    this.props.initSocialSharing(e.target);
+  };
+
+  render() {
+    const { socialIsShared, emailIsValid, submitted } = this.props;
+
+    if (socialIsShared && submitted) {
       return <FormSubmitted />;
     }
+
     return (
       <Css.FormWrapper onSubmit={this.handleSubmit}>
         <Css.Title>Чтобы выиграть путешествие</Css.Title>
-        <Css.Fieldset disable={shared}>
-          <Css.CheckboxWrapper active={shared}>
+        <Css.Fieldset disable={socialIsShared}>
+          <Css.CheckboxWrapper active={socialIsShared}>
             <Checkbox />
           </Css.CheckboxWrapper>
           <Css.Label>Поделись с друзьями:</Css.Label>
-          <SocialList
-            handleStopAnimation={this.stopAnimation}
-            handleRunTiker={this.runTiker}
-            handleClickSocial={this.handleClickSocial}
-            tiker={this.state.tiker}
-          />
+          <SocialList handleClickSocial={this.handleClickSocial} />
         </Css.Fieldset>
-        <Css.Fieldset disable={sended}>
-          <Css.CheckboxWrapper active={sended}>
+        <Css.Fieldset disable={submitted}>
+          <Css.CheckboxWrapper active={submitted}>
             <Checkbox />
           </Css.CheckboxWrapper>
           <Css.Label>Оставь почту:</Css.Label>
-          <Css.Input onChange={this.handleChangeEmail} disabled={sended} />
+          <Css.Input onChange={this.handleChangeEmail} disabled={submitted} />
         </Css.Fieldset>
-        <Css.SendButton type="submit" disabled={!this.state.valid}>
+        <Css.SendButton
+          type="submit"
+          disabled={submitted ? true : !emailIsValid}
+        >
           {' '}
           Отправить
         </Css.SendButton>
@@ -103,4 +61,17 @@ class Form extends Component {
   }
 }
 
-export default Form;
+const mapStateToProps = state => ({
+  emailIsValid: state.form.email.isValid,
+  socialIsShared: state.form.social.shared,
+  submitted: state.form.submitted
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    changeEmailAction,
+    initSocialSharing,
+    submitForm
+  }
+)(Form);
