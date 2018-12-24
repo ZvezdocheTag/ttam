@@ -13,14 +13,13 @@ exports.getUsers = (request, response) => {
 }
 
 exports.getUserById = (request, response) => {
-  
   const user_id = request.params.id
 
   pool.query('SELECT * FROM users.test WHERE user_id = $1', [user_id], (error, results) => {
     if (error) {
       throw error
     }
-    console.log(results)
+
     response.status(200).json(results.rows)
   })
 }
@@ -37,12 +36,12 @@ exports.createUser = (request, response) => {
 }
 
 exports.updateUser = (request, response) => {
-  const user_id = parseInt(request.params.id)
+  const user_id = request.params.id
   const { shared, email } = request.body
 
   pool.query(
-    'UPDATE users.test SET shared = $1, email = $2 WHERE user_id = $3',
-    [shared, email, user_id],
+    'UPDATE users.test SET email = $1, shared = $2 WHERE user_id = $3',
+    [email, shared, user_id],
     (error, results) => {
       if (error) {
         throw error

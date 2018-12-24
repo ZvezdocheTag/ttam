@@ -1,12 +1,14 @@
 import axios from 'axios';
+import { initSocialSharing, submitForm } from './form';
 
 export const CREATE_USER_REQUEST = 'modules/user/CREATE_USER_REQUEST';
 export const CREATE_USER_SUCCESS = 'modules/user/CREATE_USER_SUCCESS';
+export const UPDATE_USER = 'modules/user/UPDATE_USER';
 export const CREATE_USER_FAILURE = 'modules/user/CREATE_USER_FAILURE';
 
 const initialState = {
   loading: false,
-  user: null,
+  data: null,
   error: false
 };
 
@@ -20,7 +22,7 @@ export default function(state = initialState, action) {
     case CREATE_USER_SUCCESS:
       return {
         ...state,
-        user: action.value,
+        data: action.value,
         loading: false
       };
     case CREATE_USER_FAILURE:
@@ -34,17 +36,42 @@ export default function(state = initialState, action) {
   }
 }
 
+const updateUser = data => dispatch => {
+  dispatch(createUserSuccessAction(data));
+  dispatch(initSocialSharing(data.shared));
+  if (data.email !== null) {
+    dispatch(submitForm(data.email));
+  }
+};
+
+export const requestToUpdateUser = id => {
+  return (dispatch, getState) => {
+    const {
+      form: { email, social }
+    } = getState();
+    const data = {
+      shared: social.shared,
+      email: email.isValid ? email.value : null
+    };
+
+    dispatch(createUserRequestAction());
+    axios.put(`/api/user/${id}`, data).then(res => {
+      console.log(res);
+    });
+  };
+};
+
 export const fetchUser = id => {
   return dispatch => {
     dispatch(createUserRequestAction());
     axios
       .get(`/api/user/${id}`)
       .then(res => {
-        if (res.status === 201) {
-          dispatch(createUserSuccessAction(res.data[0]));
+        if (res.status === 200) {
+          dispatch(updateUser(res.data[0]));
         }
       })
-      .catch(e => dispatch(createUserFailAction()));
+      .catch(() => dispatch(createUserFailAction()));
   };
 };
 

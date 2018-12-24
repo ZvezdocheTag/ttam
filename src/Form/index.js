@@ -26,13 +26,16 @@ class Form extends React.PureComponent {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.submitForm();
+    const { email, submitForm, user, emailIsValid } = this.props;
+    if (emailIsValid && user) {
+      submitForm(email, user.user_id);
+    }
   };
 
   componentDidMount() {
     window.addEventListener('focus', () => {
       if (this.state.frameWindow !== null && this.state.frameWindow.closed) {
-        this.props.initSocialSharing();
+        this.props.initSocialSharing(true, this.props.user.user_id);
       }
     });
   }
@@ -52,9 +55,8 @@ class Form extends React.PureComponent {
   };
 
   render() {
-    const { socialIsShared, emailIsValid, submitted } = this.props;
-    console.log(socialIsShared && submitted);
-    if (socialIsShared && submitted) {
+    const { socialIsShared, emailIsValid, email, submitted } = this.props;
+    if (submitted && socialIsShared) {
       return <FormSubmitted />;
     }
 
@@ -76,7 +78,11 @@ class Form extends React.PureComponent {
             <Checkbox />
           </Css.CheckboxWrapper>
           <Css.Label>Оставь почту:</Css.Label>
-          <Css.Input onChange={this.handleChangeEmail} disabled={submitted} />
+          <Css.Input
+            onChange={this.handleChangeEmail}
+            value={email}
+            disabled={submitted}
+          />
         </Css.Fieldset>
         <Css.SendButton
           type="submit"
@@ -92,8 +98,10 @@ class Form extends React.PureComponent {
 
 const mapStateToProps = state => ({
   emailIsValid: state.form.email.isValid,
+  email: state.form.email.value,
   socialIsShared: state.form.social.shared,
-  submitted: state.form.submitted
+  submitted: state.form.submitted,
+  user: state.user.data
 });
 
 export default connect(

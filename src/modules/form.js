@@ -1,3 +1,5 @@
+import { requestToUpdateUser } from './user';
+
 export const CHANGE_EMAIL = 'modules/form/CHANGE_EMAIL';
 export const INIT_SOCIAL_SHARING = 'modules/form/INIT_SOCIAL_SHARING';
 export const SUBMIT_FORM = 'modules/form/SUBMIT_FORM';
@@ -10,7 +12,6 @@ const initialState = {
     isValid: false
   },
   social: {
-    networkName: '',
     shared: false
   },
   submitted: false
@@ -30,12 +31,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         social: {
-          shared: true
+          shared: action.state || true
         }
       };
     case SUBMIT_FORM:
       return {
         ...state,
+        email: {
+          ...state.email,
+          value: action.email
+        },
         submitted: true
       };
     default:
@@ -48,10 +53,16 @@ export const changeEmailAction = value => ({
   value
 });
 
-export const initSocialSharing = () => ({
-  type: INIT_SOCIAL_SHARING
-});
+export const submitForm = (email, userId) => dispatch => {
+  dispatch({ type: SUBMIT_FORM, email });
+  if (userId) {
+    dispatch(requestToUpdateUser(userId));
+  }
+};
 
-export const submitForm = () => ({
-  type: SUBMIT_FORM
-});
+export const initSocialSharing = (state, userId) => dispatch => {
+  dispatch({ type: INIT_SOCIAL_SHARING, state });
+  if (userId) {
+    dispatch(requestToUpdateUser(userId));
+  }
+};
