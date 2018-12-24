@@ -27,8 +27,12 @@ class Form extends React.PureComponent {
     this.props.submitForm();
   };
 
+  componentDidMount() {
+    console.log(window.opener, window);
+  }
   handleClickSocial = shareFun => {
     return e => {
+      console.log(window.opener);
       e.preventDefault();
       this.props.initSocialSharing(e.target);
 

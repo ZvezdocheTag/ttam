@@ -9,15 +9,16 @@ import * as Css from './styles';
 const Share = {
   vk: function(purl, ptitle, pimg, text) {
     let url = 'http://vk.com/share.php?';
-    url = url + 'url=' + encodeURIComponent(purl);
-    url = url + '&title=' + encodeURIComponent(ptitle);
-    url = url + '&noparse=true';
+    url += 'url=' + encodeURIComponent(purl);
+    url += '&title=' + encodeURIComponent(ptitle);
+    url += '&noparse=true';
 
     Share.popup(url);
   },
 
   ok: function(purl, text) {
     let url = `https://connect.ok.ru/offer?url=${encodeURIComponent(purl)}`;
+
     Share.popup(url);
   },
 
@@ -27,6 +28,7 @@ const Share = {
     url += '&p[summary]=' + encodeURIComponent(text);
     url += '&p[url]=' + encodeURIComponent(purl);
     url += '&p[images][0]=' + encodeURIComponent(pimg);
+
     Share.popup(url);
   },
 
@@ -35,11 +37,18 @@ const Share = {
     url += 'text=' + encodeURIComponent(ptitle);
     url += '&url=' + encodeURIComponent(purl);
     url += '&counturl=' + encodeURIComponent(purl);
+
     Share.popup(url);
   },
 
   popup: function(url) {
-    window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
+    const guide = window.open(
+      url,
+      '',
+      'toolbar=0,status=0,width=626,height=436'
+    );
+
+    console.log(guide, 'OPEN  POST');
   }
 };
 
@@ -62,6 +71,10 @@ class SocialList extends React.PureComponent {
   stopTiker = () => {
     clearInterval(this.timer);
   };
+
+  componentDidUpdate() {
+    console.log(window);
+  }
 
   runTiker = () => {
     this.timer = setInterval(() => {
