@@ -1,11 +1,6 @@
 const Pool = require('pg').Pool
-const pool = new Pool({
-  user: 'me',
-  host: 'localhost',
-  database: 'aviasales',
-  password: 'password',
-  port: 5432,
-})
+const configDB = require('./configDB')
+const pool = new Pool(configDB)
 
 exports.getUsers = (request, response) => {
   pool.query('SELECT * FROM users.test ORDER BY id ASC', (error, results) => {

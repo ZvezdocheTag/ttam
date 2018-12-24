@@ -13,7 +13,7 @@ const Share = {
     url += '&title=' + encodeURIComponent(ptitle);
     url += '&noparse=true';
 
-    Share.popup(url);
+    return Share.popup(url);
   },
 
   ok: function(purl, text) {
@@ -42,13 +42,9 @@ const Share = {
   },
 
   popup: function(url) {
-    const guide = window.open(
-      url,
-      '',
-      'toolbar=0,status=0,width=626,height=436'
-    );
-
-    console.log(guide, 'OPEN  POST');
+    return new Promise(resolve => {
+      resolve(window.open(url, '', 'toolbar=0,status=0,width=626,height=436'));
+    });
   }
 };
 
@@ -72,10 +68,6 @@ class SocialList extends React.PureComponent {
     clearInterval(this.timer);
   };
 
-  componentDidUpdate() {
-    console.log(window);
-  }
-
   runTiker = () => {
     this.timer = setInterval(() => {
       this.setState(prev => ({
@@ -85,6 +77,9 @@ class SocialList extends React.PureComponent {
   };
 
   componentDidUpdate() {
+    if (this.props.disable) {
+      clearInterval(this.timer);
+    }
     if (this.state.tiker === 3) {
       setTimeout(() => {
         this.setState({
@@ -99,7 +94,7 @@ class SocialList extends React.PureComponent {
   }
 
   render() {
-    const { handleClickSocial } = this.props;
+    const { handleClickSocial, disable } = this.props;
     return (
       <Css.SocialListWrapper>
         {socials.map((social, index) => (
@@ -109,6 +104,7 @@ class SocialList extends React.PureComponent {
             onMouseLeave={this.runTiker}
             onMouseEnter={this.stopTiker}
             bg={social.brandColor}
+            disabled={disable}
             tiker={this.state.tiker === index}
           >
             <Css.SocialIcon src={social.img} />

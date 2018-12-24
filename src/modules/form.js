@@ -30,7 +30,6 @@ export default function(state = initialState, action) {
       return {
         ...state,
         social: {
-          networkName: action.value,
           shared: true
         }
       };
@@ -49,9 +48,8 @@ export const changeEmailAction = value => ({
   value
 });
 
-export const initSocialSharing = value => ({
-  type: INIT_SOCIAL_SHARING,
-  value
+export const initSocialSharing = () => ({
+  type: INIT_SOCIAL_SHARING
 });
 
 export const submitForm = () => ({

@@ -14,7 +14,9 @@ class Form extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      counter: 0
+      counter: 0,
+      frameWindow: null,
+      closedFrameWindow: false
     };
     this.myRef = React.createRef();
   }
@@ -28,26 +30,30 @@ class Form extends React.PureComponent {
   };
 
   componentDidMount() {
-    console.log(window.opener, window);
+    window.addEventListener('focus', () => {
+      if (this.state.frameWindow !== null && this.state.frameWindow.closed) {
+        this.props.initSocialSharing();
+      }
+    });
   }
   handleClickSocial = shareFun => {
     return e => {
-      console.log(window.opener);
       e.preventDefault();
-      this.props.initSocialSharing(e.target);
-
-      return shareFun(window.location.href, 'Aviasales candidate test');
+      shareFun(window.location.href, 'Aviasales candidate test').then(
+        newWindow => {
+          if (this.state.frameWindow === null) {
+            this.setState({
+              frameWindow: newWindow
+            });
+          }
+        }
+      );
     };
   };
 
-  // shareVK = e => {
-  //   return (e) => {
-  //     return Share.ok(window.location.href, 'SAntara')
-  //   };
-  // };
-
   render() {
     const { socialIsShared, emailIsValid, submitted } = this.props;
+    console.log(socialIsShared && submitted);
     if (socialIsShared && submitted) {
       return <FormSubmitted />;
     }
@@ -60,7 +66,10 @@ class Form extends React.PureComponent {
             <Checkbox />
           </Css.CheckboxWrapper>
           <Css.Label>Поделись с друзьями:</Css.Label>
-          <SocialList handleClickSocial={this.handleClickSocial} />
+          <SocialList
+            handleClickSocial={this.handleClickSocial}
+            disable={socialIsShared}
+          />
         </Css.Fieldset>
         <Css.Fieldset disable={submitted}>
           <Css.CheckboxWrapper active={submitted}>

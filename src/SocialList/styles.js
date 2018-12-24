@@ -29,6 +29,7 @@ export const SocialButton = styled.button`
   height: 53px;
   background: ${props => props.bg || '#45668E'};
   border-radius: 50%;
+  cursor: pointer;
   border: none;
   outline: none;
   padding: 0;
@@ -37,10 +38,16 @@ export const SocialButton = styled.button`
   animation-play-state: ${props => (props.tiker ? 'running' : 'paused')};
   /* animation-fill-mode: forwards; */
 
-  &:hover ${SocialIcon} {
+  &:disabled {
+    animation-play-state: paused;
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  &:hover:enabled ${SocialIcon} {
     opacity: 0;
   }
-  &:hover ${SocialIconLike} {
+  &:hover:enabled ${SocialIconLike} {
     opacity: 1;
   }
 `;
