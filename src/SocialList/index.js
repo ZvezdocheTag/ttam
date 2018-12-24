@@ -6,11 +6,48 @@ import fbLogo from './fb.svg';
 import heartImg from './heart.svg';
 import * as Css from './styles';
 
+const Share = {
+  vk: function(purl, ptitle, pimg, text) {
+    let url = 'http://vk.com/share.php?';
+    url = url + 'url=' + encodeURIComponent(purl);
+    url = url + '&title=' + encodeURIComponent(ptitle);
+    url = url + '&noparse=true';
+
+    Share.popup(url);
+  },
+
+  ok: function(purl, text) {
+    let url = `https://connect.ok.ru/offer?url=${encodeURIComponent(purl)}`;
+    Share.popup(url);
+  },
+
+  fb: function(purl, ptitle, pimg, text) {
+    let url = 'http://www.facebook.com/sharer.php?s=100';
+    url += '&p[title]=' + encodeURIComponent(ptitle);
+    url += '&p[summary]=' + encodeURIComponent(text);
+    url += '&p[url]=' + encodeURIComponent(purl);
+    url += '&p[images][0]=' + encodeURIComponent(pimg);
+    Share.popup(url);
+  },
+
+  tw: function(purl, ptitle) {
+    let url = 'http://twitter.com/share?';
+    url += 'text=' + encodeURIComponent(ptitle);
+    url += '&url=' + encodeURIComponent(purl);
+    url += '&counturl=' + encodeURIComponent(purl);
+    Share.popup(url);
+  },
+
+  popup: function(url) {
+    window.open(url, '', 'toolbar=0,status=0,width=626,height=436');
+  }
+};
+
 const socials = [
-  { key: 'vk', brandColor: '#45668E', img: vkLogo },
-  { key: 'ok', brandColor: '#EB722E', img: okLogo },
-  { key: 'fb', brandColor: '#3B5998', img: fbLogo },
-  { key: 'tw', brandColor: '#00ACED', img: twLogo }
+  { key: 'vk', brandColor: '#45668E', img: vkLogo, shareLink: Share.vk },
+  { key: 'ok', brandColor: '#EB722E', img: okLogo, shareLink: Share.ok },
+  { key: 'fb', brandColor: '#3B5998', img: fbLogo, shareLink: Share.fb },
+  { key: 'tw', brandColor: '#00ACED', img: twLogo, shareLink: Share.tw }
 ];
 
 class SocialList extends React.PureComponent {
@@ -55,7 +92,7 @@ class SocialList extends React.PureComponent {
         {socials.map((social, index) => (
           <Css.SocialButton
             key={social.key}
-            onClick={handleClickSocial}
+            onClick={handleClickSocial(social.shareLink)}
             onMouseLeave={this.runTiker}
             onMouseEnter={this.stopTiker}
             bg={social.brandColor}
