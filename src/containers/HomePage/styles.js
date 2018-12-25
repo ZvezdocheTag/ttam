@@ -12,6 +12,11 @@ export const PageWrapper = styled.div`
   font-size: calc(10px + 2vmin);
   color: white;
   position: relative;
+
+  ${props => props.theme.media.phone`
+    justify-content: flex-start;
+    padding-top: 65px;
+  `}
 `;
 export const LogoWrapper = styled.div`
   position: absolute;

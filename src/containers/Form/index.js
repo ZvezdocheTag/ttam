@@ -63,20 +63,24 @@ class Form extends React.PureComponent {
       <Css.FormWrapper onSubmit={this.handleSubmit}>
         <Css.Title>Чтобы выиграть путешествие</Css.Title>
         <Css.Fieldset disable={socialIsShared}>
-          <Css.CheckboxWrapper active={socialIsShared}>
-            <Checkbox />
-          </Css.CheckboxWrapper>
-          <Css.Label>Поделись с друзьями:</Css.Label>
+          <Css.Label>
+            <Css.CheckboxWrapper active={socialIsShared}>
+              <Checkbox />
+            </Css.CheckboxWrapper>
+            Поделись с друзьями:
+          </Css.Label>
           <SocialList
             handleClickSocial={this.handleClickSocial}
             disable={socialIsShared}
           />
         </Css.Fieldset>
         <Css.Fieldset disable={submitted}>
-          <Css.CheckboxWrapper active={submitted}>
-            <Checkbox />
-          </Css.CheckboxWrapper>
-          <Css.Label>Оставь почту:</Css.Label>
+          <Css.Label>
+            <Css.CheckboxWrapper active={submitted}>
+              <Checkbox />
+            </Css.CheckboxWrapper>
+            Оставь почту:
+          </Css.Label>
           <Css.Input
             onChange={this.handleChangeEmail}
             value={email}

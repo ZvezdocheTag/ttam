@@ -19,7 +19,10 @@ export const FormWrapper = styled.form`
 
   counter-reset: fieldset;
 
-  ${props => props.theme.media.phone`width: 100%;`}
+  ${props => props.theme.media.phone`
+    width: 100%;
+    background-image: initial;
+  `}
 `;
 
 export const Title = styled.h3`
@@ -27,12 +30,24 @@ export const Title = styled.h3`
   font-family: Shnobel, Helvetica Neue, Arial, sans-serif;
   font-size: 50px;
   margin: 0;
+
+  ${props => props.theme.media.phone`
+    font-size: 27px;
+    margin-bottom: 25px;
+  `}
 `;
 
 export const Label = styled.label`
-  font-size: 1.32vw;
+  font-size: 18px;
   margin-bottom: 10px;
   display: block;
+  position: relative;
+
+  ${props => props.theme.media.phone`
+    font-size: 16px;
+    display: inline-block;
+    margin-bottom: 20px;
+  `}
 `;
 export const Fieldset = styled.fieldset`
   border: none;
@@ -40,7 +55,13 @@ export const Fieldset = styled.fieldset`
   position: relative;
   padding-left: 40px;
   margin-bottom: 20px;
-  padding-bottom: 0;
+    margin: 0;
+    padding: 0;
+  ${props => props.theme.media.phone`
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 30px;
+  `}
 
   & > ${Label} {
     opacity: ${props => (!props.disable ? 1 : 0.5)};
@@ -49,7 +70,7 @@ export const Fieldset = styled.fieldset`
   &:last-child {
     margin-bottom: 38px;
   }
-  &:before {
+  & > ${Label}:before {
     opacity: ${props => (!props.disable ? 1 : 0)};
     transition: opacity 0.3s ease;
     position: absolute;
@@ -59,6 +80,13 @@ export const Fieldset = styled.fieldset`
     font-size: 44px;
     counter-increment: fieldset;
     content: counter(fieldset) '. ';
+
+    ${props => props.theme.media.phone`
+      font-size: 16px;
+      font-family: Open Sans, Helvetica Neue, Arial, sans-serif;
+      left: -19px;
+      top: 0;
+    `}
   }
 `;
 
@@ -68,13 +96,10 @@ export const SendButton = styled.button`
   margin: 0 auto;
   display: block;
 
-  line-height: 5.15vw;
-  max-height: 5.15vw;
-  min-width: 15.44vw;
-  min-height: 5.15vw;
-  font-size: 2.87vw;
-  padding: 0.51vw 2.94vw 0;
-  border-radius: 5.15vw;
+  padding: 11px 70px 17px;
+  font-size: 40px;
+  border-radius: 25px;
+  height: 70px;
 
   color: #fff;
   position: relative;
@@ -104,17 +129,32 @@ export const SendButton = styled.button`
     border: 2px solid #fff;
     cursor: default;
   }
+
+  ${props => props.theme.media.phone`
+    padding: 9px 45px 17px;
+    font-size: 30px;
+    height: 60px;
+    width: 100%;
+    border-radius: 30px;
+    `}
 `;
 
 export const Input = styled.input`
-  min-height: 4.04vw;
-  padding: 0.88vw 1.47vw;
-  margin-bottom: 1.47vw;
+  /* padding: 0.88vw 1.47vw; */
+  padding: 10px 25px;
   border: 0.15vw solid transparent;
-  border-radius: 3.68vw;
-  font-size: 1.32vw;
+
   text-align: left;
   width: 100%;
+  max-width: 302px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  border-radius: 25px;
+
+  ${props => props.theme.media.phone`
+
+`}
 `;
 
 export const CheckboxWrapper = styled.div`
@@ -126,4 +166,9 @@ export const CheckboxWrapper = styled.div`
   left: 10px;
   opacity: ${props => (props.active ? 1 : 0)};
   transition: opacity 0.3s ease;
+
+  ${props => props.theme.media.phone`
+top: 2px;
+    left: -25px;
+`}
 `;

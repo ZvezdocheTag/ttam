@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import Form from '../Form/';
 import { connect } from 'react-redux';
 import { createNewUser, fetchUser } from '../../modules/user';
 import { generateID } from '../../utils/generateID';
 import * as Css from './styles';
+import Logo from './Logo';
 
 class Home extends Component {
   componentDidMount() {
@@ -23,7 +24,8 @@ class Home extends Component {
       <div>
         <Css.PageWrapper>
           <Css.LogoWrapper>
-            <img src={logo} alt="logo" />
+            <Logo />
+            {/* <img src={logo} alt="logo" /> */}
           </Css.LogoWrapper>
           <Form />
         </Css.PageWrapper>
