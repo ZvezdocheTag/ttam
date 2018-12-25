@@ -18,6 +18,8 @@ export const FormWrapper = styled.form`
   background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
 
   counter-reset: fieldset;
+
+  ${props => props.theme.media.phone`width: 100%;`}
 `;
 
 export const Title = styled.h3`
