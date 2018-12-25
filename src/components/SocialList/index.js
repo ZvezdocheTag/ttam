@@ -1,7 +1,7 @@
 import React from 'react';
 import heartImg from './heart.svg';
 import * as Css from './styles';
-import socials from '../utils/socials';
+import socials from '../../utils/socials';
 
 class SocialList extends React.PureComponent {
   state = {

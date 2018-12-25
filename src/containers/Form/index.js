@@ -1,25 +1,20 @@
 import React from 'react';
-import SocialList from '../SocialList';
 import * as Css from './styles';
-import Checkbox from './Checkbox';
-import FormSubmitted from '../FormSubmitted/index';
+import Checkbox from '../../components/Checkbox';
+import SocialList from '../../components/SocialList';
+import SubmittedScreen from '../../components/SubmittedScreen';
 import { connect } from 'react-redux';
 import {
   changeEmailAction,
   initSocialSharing,
   submitForm
-} from '../modules/form';
+} from '../../modules/form';
 
 class Form extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: 0,
-      frameWindow: null,
-      closedFrameWindow: false
-    };
-    this.myRef = React.createRef();
-  }
+  state = {
+    frameWindow: null
+  };
+
   handleChangeEmail = e => {
     this.props.changeEmailAction(e.target.value);
   };
@@ -39,6 +34,7 @@ class Form extends React.PureComponent {
       }
     });
   }
+
   handleClickSocial = shareFun => {
     return e => {
       e.preventDefault();
@@ -56,8 +52,11 @@ class Form extends React.PureComponent {
 
   render() {
     const { socialIsShared, emailIsValid, email, submitted } = this.props;
+    //TODO: to remove blink effect during the time when we recieve user info,
+    // add loader or show Forms after loading end.
+
     if (submitted && socialIsShared) {
-      return <FormSubmitted />;
+      return <SubmittedScreen />;
     }
 
     return (

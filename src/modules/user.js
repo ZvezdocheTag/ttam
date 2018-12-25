@@ -68,6 +68,7 @@ export const fetchUser = id => {
       .get(`/api/user/${id}`)
       .then(res => {
         if (res.status === 200) {
+          console.log(res.data[0]);
           dispatch(updateUser(res.data[0]));
         }
       })

@@ -31,7 +31,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         social: {
-          shared: action.state || true
+          shared: action.state
         }
       };
     case SUBMIT_FORM:

@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Css from './styles';
 
-const FormSubmitted = () => {
+const SubmittedScreen = () => {
   return (
     <>
       <Css.Wrapper>
@@ -20,4 +20,4 @@ const FormSubmitted = () => {
   );
 };
 
-export default FormSubmitted;
+export default SubmittedScreen;
