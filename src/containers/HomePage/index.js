@@ -23,7 +23,7 @@ class Home extends Component {
     return (
       <div>
         <Css.PageWrapper>
-          <Css.LogoWrapper>
+          <Css.LogoWrapper finalPageFlag={this.props.formIsSubmitted}>
             <Logo />
             {/* <img src={logo} alt="logo" /> */}
           </Css.LogoWrapper>
@@ -34,7 +34,10 @@ class Home extends Component {
   }
 }
 
+const mapStateToProps = ({ form }) => ({
+  formIsSubmitted: form.social.shared && form.submitted
+});
 export default connect(
-  null,
+  mapStateToProps,
   { createNewUser, fetchUser }
 )(Home);

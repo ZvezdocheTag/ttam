@@ -13,6 +13,5 @@ Location: `/server/configDB.js`
 ### Todo:
 
 - Add propTypes
-- Add responsive for mobile
 - Test crossbrowser
 - Test building script

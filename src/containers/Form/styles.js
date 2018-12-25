@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const FormWrapper = styled.form`
   width: 516px;
-  padding: 40px 60px;
+  padding: 30px 72px;
   text-align: left;
 
   background-image: linear-gradient(
@@ -18,10 +18,12 @@ export const FormWrapper = styled.form`
   background-repeat: repeat-x, repeat-y, repeat-x, repeat-y;
 
   counter-reset: fieldset;
+  padding-left: 90px;
 
   ${props => props.theme.media.phone`
     width: 100%;
     background-image: initial;
+    padding: 30px;
   `}
 `;
 
@@ -30,6 +32,7 @@ export const Title = styled.h3`
   font-family: Shnobel, Helvetica Neue, Arial, sans-serif;
   font-size: 50px;
   margin: 0;
+  margin-bottom: 50px;
 
   ${props => props.theme.media.phone`
     font-size: 27px;
@@ -39,7 +42,7 @@ export const Title = styled.h3`
 
 export const Label = styled.label`
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   display: block;
   position: relative;
 
@@ -53,10 +56,10 @@ export const Fieldset = styled.fieldset`
   border: none;
   outline: none;
   position: relative;
-  padding-left: 40px;
-  margin-bottom: 20px;
-    margin: 0;
     padding: 0;
+    margin: 0;
+  padding-left: 40px;
+  margin-bottom: 30px;
   ${props => props.theme.media.phone`
     padding-left: 0;
     text-align: center;
@@ -75,7 +78,7 @@ export const Fieldset = styled.fieldset`
     transition: opacity 0.3s ease;
     position: absolute;
     top: 10px;
-    left: 0;
+    left: -50px;
     font-family: Shnobel, Helvetica Neue, Arial, sans-serif;
     font-size: 44px;
     counter-increment: fieldset;
@@ -96,9 +99,10 @@ export const SendButton = styled.button`
   margin: 0 auto;
   display: block;
 
+  width: 230px;
   padding: 11px 70px 17px;
   font-size: 40px;
-  border-radius: 25px;
+  border-radius: 33px;
   height: 70px;
 
   color: #fff;
@@ -135,7 +139,6 @@ export const SendButton = styled.button`
     font-size: 30px;
     height: 60px;
     width: 100%;
-    border-radius: 30px;
     `}
 `;
 
@@ -143,9 +146,10 @@ export const Input = styled.input`
   /* padding: 0.88vw 1.47vw; */
   padding: 10px 25px;
   border: 0.15vw solid transparent;
+  display: block;
+  width: 100%;
 
   text-align: left;
-  width: 100%;
   max-width: 302px;
   height: 50px;
   line-height: 50px;
@@ -153,7 +157,7 @@ export const Input = styled.input`
   border-radius: 25px;
 
   ${props => props.theme.media.phone`
-
+    max-width: 100%;
 `}
 `;
 
@@ -162,8 +166,8 @@ export const CheckboxWrapper = styled.div`
   cursor: pointer;
   align-self: center;
   position: absolute;
-  top: 11px;
-  left: 10px;
+  top: 3px;
+  left: -30px;
   opacity: ${props => (props.active ? 1 : 0)};
   transition: opacity 0.3s ease;
 

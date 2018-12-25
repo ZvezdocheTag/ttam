@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import pinkBackground from './back.png';
 
 export const PageWrapper = styled.div`
@@ -8,18 +8,41 @@ export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
   position: relative;
+`;
 
+export const TextGroup = styled.g`
   ${props => props.theme.media.phone`
-    justify-content: flex-start;
-    padding-top: 65px;
-  `}
+display: none;
+`}
 `;
 export const LogoWrapper = styled.div`
-  position: absolute;
-  top: 30px;
-  left: 30px;
+
+  display: flex;
+  padding: 30px;
+  width: 100%;
+  height: 90px;
+ 
+
+  ${props => props.theme.media.phone`
+  padding: 10px;
+      ${props =>
+        props.finalPageFlag &&
+        css`
+          order: 1;
+          z-index: 2;
+          padding-top: 30vh;
+          justify-content: center;
+          align-items: center;
+        `}
+
+  `}
+
+  & ${TextGroup} {
+    ${props => props.theme.media.phone`
+      display: ${props => (props.finalPageFlag ? 'block' : 'none')};
+  `}
+  }
 `;

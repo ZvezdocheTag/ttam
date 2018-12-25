@@ -1,11 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import { TextGroup } from './styles';
 
-const TextGroup = styled.g`
-  ${props => props.theme.media.phone`
-display: none;
-  `}
-`;
 const Logo = props => (
   <svg width={139} height={29} fill="none" {...props}>
     <path
