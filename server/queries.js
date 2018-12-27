@@ -1,6 +1,23 @@
+const Sequelize = require('sequelize')
 const Pool = require('pg').Pool
 const configDB = require('./configDB')
 const pool = new Pool(configDB)
+
+// const Op = Sequelize.Op
+
+const sequelize = new Sequelize('aviasales', 'me', 'password', {
+  host: 'localhost',
+  dialect: 'postgres' // pick one of 'mysql','sqlite','postgres','mssql',
+});
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 exports.getUsers = (request, response) => {
   pool.query('SELECT * FROM users.test ORDER BY user_id ASC', (error, results) => {
